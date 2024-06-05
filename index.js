@@ -1,5 +1,7 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
+const Note = require('./models/note')
 const cors = require('cors')
 
 let notes = [
@@ -32,6 +34,35 @@ app.use(express.json())
 app.use(requestLogger)
 app.use(express.static('dist'))
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+// const mongoose = require('mongoose')
+
+// const password = process.argv[2]
+
+// const url =`mongodb+srv://jawahar:${password}@cluster0.72n8kz2.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
+
+// mongoose.set('strictQuery',false)
+
+// mongoose.connect(url)
+
+// const noteSchema = new mongoose.Schema({
+//   content: String,
+//   important: Boolean,
+// })
+
+// noteSchema.set('toJSON', {
+//   transform: (document, returnedObject) => {
+//     returnedObject.id = returnedObject._id.toString()
+//     delete returnedObject._id
+//     delete returnedObject.__v
+//   }
+// })
+// const Note = mongoose.model('Note', noteSchema)
+
+
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
@@ -41,7 +72,9 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/notes', (request, response) => {
-  response.json(notes)
+  Note.find({}).then(notes=>{
+    response.json(notes)
+  })
 })
 
 const generateId = () => {
@@ -92,7 +125,7 @@ app.delete('/api/notes/:id', (request, response) => {
 
 app.use(unknownEndpoint)
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

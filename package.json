@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js ZLqJGBbLNLBiovf4",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env  NODE_ENV=test node --test",
     "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd ../../Learning React/notes && npm run build && @powershell Copy-Item dist -Recurse '../../Learning Node/First-project'",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
@@ -14,9 +14,11 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "eslint-define-config": "^2.1.0",
     "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
     "mongoose": "^8.4.1"
   },
   "devDependencies": {
@@ -25,6 +27,7 @@
     "@stylistic/eslint-plugin-js": "^2.1.0",
     "eslint": "^9.4.0",
     "globals": "^15.3.0",
-    "nodemon": "^3.1.2"
+    "nodemon": "^3.1.2",
+    "supertest": "^7.0.0"
   }
 }

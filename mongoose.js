@@ -7,7 +7,7 @@ if (process.argv.length<3) {
 
 const password = process.argv[2]
 
-const url =`mongodb+srv://jawahar:${password}@cluster0.72n8kz2.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
+const url =`mongodb+srv://jawahar:${password}@cluster0.72n8kz2.mongodb.net/testNoteApp?retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery',false)
 
@@ -30,7 +30,7 @@ const Note = mongoose.model('Note', noteSchema)
 
 
 const note = new Note({
-  content: 'a note from server',
+  content: 'HTML is easy',
   important: true
 })
 
